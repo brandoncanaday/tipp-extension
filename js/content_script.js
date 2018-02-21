@@ -3,7 +3,7 @@ console.log("CONTENT SCRIPT LOADED");
 
 (function() {
 
-    // this will be changed when testing vs when pushing to production
+    // this will be changed when deploying new release
     const LIVE_DOMAIN_URL = 'https://staging.tippextension.com';
 
     runInitCode();

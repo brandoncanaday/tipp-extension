@@ -3,30 +3,26 @@ console.log('BACKGROUND SCRIPT EXECUTED');
 
 (function() {
 
-    // this will be changed when testing vs when pushing to production
+    // these will be changed when deploying new release
     const LIVE_DOMAIN_URL = 'https://staging.tippextension.com';
+    const STRIPE_CLIENT_ID = 'ca_BZRHmzhOuOKgiOM4u2GaqcEy9wkqM4Dn';
 
-    // make sure this hasnt changed after reloading extension
-    const CHROME_EXTENSION_ID = chrome.runtime.id;
     // google stuff
     const GOOGLE_API_KEY   = 'AIzaSyDXr947mAu05wahjTLGZ-0ShCtyu2NVm_g';
     const GOOGLE_CLIENT_ID = '1016457967962-mfps991h6u7u6f51aglairp8uho8odnn.apps.googleusercontent.com';
     const GOOGLE_OAUTH_URL = 'https://accounts.google.com/o/oauth2/v2/auth'+
                               '?scope=profile+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fyoutube.readonly&'+
                               'include_granted_scopes=true&'+
-                              'redirect_uri=https%3A%2F%2F'+CHROME_EXTENSION_ID+'.chromiumapp.org&'+
+                              'redirect_uri=https%3A%2F%2F'+chrome.runtime.id+'.chromiumapp.org&'+
                               'response_type=token&'+
                               'client_id='+GOOGLE_CLIENT_ID;
     const GOOGLE_OAUTH_VALIDATE_URL = 'https://www.googleapis.com/oauth2/v3/tokeninfo';
-    // stripe stuff
-    const STRIPE_CLIENT_ID = 'ca_BZRHmzhOuOKgiOM4u2GaqcEy9wkqM4Dn';
     const STRIPE_OAUTH_URL = 'https://connect.stripe.com/express/oauth/authorize'+
-                                '?redirect_uri=https%3A%2F%2F'+CHROME_EXTENSION_ID+'.chromiumapp.org&'+
+                                '?redirect_uri=https%3A%2F%2F'+chrome.runtime.id+'.chromiumapp.org&'+
                                 'client_id='+STRIPE_CLIENT_ID;
-    // // github stuff
     // const GITHUB_CLIENT_ID = 'db209c2ac723da32da6e';
     // const GITHUB_OAUTH_URL = 'https://github.com/login/oauth/authorize?client_id='+
-    //                             '?redirect_uri=https%3A%2F%2F'+CHROME_EXTENSION_ID+'.chromiumapp.org&'+
+    //                             '?redirect_uri=https%3A%2F%2F'+chrome.runtime.id+'.chromiumapp.org&'+
     //                             'client_id='+GITHUB_CLIENT_ID;
 
     const NOTIFICATION = {
