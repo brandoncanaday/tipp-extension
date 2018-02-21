@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+  <html>
+    <head>
+      <script src="js/show-correct-popup.js"></script>
+
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta http-equiv="X-UA-Compatible" content="ie=edge">
+      <title>Tipp | Welcome</title>
+
+      <link href="css/materialize.min.css" rel="stylesheet">
+      <link href="css/splash.css" rel="stylesheet">
+    </head>
+    <body>
+
+      <!-- NAV -->
+
+      <nav class="nav-extended">
+        <div class="nav-wrapper white">
+          <a href="" class="brand-logo center">
+            <img src="img/tipp_brand.png" alt="brand logo">
+          </a>
+        </div>
+        <div class="nav-content">
+          <ul class="tabs tabs-transparent">
+            <li class="tab"><a class="active green white-text" href="#signup-view">Sign Up
+            </a></li>
+            <li class="tab"><a class="green white-text" href="#login-view">Login
+            </a></li>
+          </ul>
+        </div>
+      </nav>
+
+      <!-- SIGN-UP PAGE -->
+
+      <section id="signup-view">
+        <p class="header flow-text center">Create an account to begin receiving donations today!
+        </p>
+        <div id="tipp-register" class="center">
+          <!-- first form page (basic info) -->
+          <form class="form-page form-page-1">
+            <div class="field-group basic-information-fields row tooltipped z-depth-1" data-position="top" data-delay="50" data-tooltip="These will help others identify you">
+              <div class="input-field fname col s6">
+                <input type="text" id="tipp-fname">
+                <label for="tipp-fname">First Name
+                </label>
+              </div>
+              <div class="input-field lname col s6">
+                <input type="text" id="tipp-lname">
+                <label for="tipp-lname">Last Name
+                </label>
+              </div>
+              <div class="input-field displayname col s12">
+                <input type="text" id="tipp-displayname">
+                <label for="tipp-displayname">Display Name
+                </label>
+              </div>
+            </div>
+            <div class="input-field row">
+              <div class="col s12">
+                <button class="btn waves-effect white-text green hoverable" type="submit">
+                  Next<i class="material-icons right">arrow_forward</i>
+                </button>
+              </div>
+            </div>
+          </form>
+          <!-- second form page (login info) -->
+          <form class="form-page form-page-2">
+            <div class="field-group login-information-fields row tooltipped z-depth-1" data-position="top" data-delay="50" data-tooltip="These will be used to log you in">
+              <div class="input-field email col s12">
+                <input type="email" id="tipp-email" required>
+                <label for="tipp-email">Email
+                </label>
+              </div>
+              <div class="input-field passphrase col s12">
+                <input type="password" id="tipp-passphrase" required>
+                <label for="tipp-passphrase">Passphrase
+                </label>
+              </div>
+              <div class="input-field passphrase-repeat col s12">
+                <input type="password" id="tipp-passphrase-repeat" required>
+                <label for="tipp-passphrase-repeat">Re-type Passphrase
+                </label>
+              </div>
+            </div>
+            <div class="input-field row">
+              <div class="col s2">
+                <button id="back-btn" class="btn-floating waves-effect white-text green hoverable" type="button">
+                  <i class="material-icons">arrow_back</i>
+                </button>
+              </div>
+              <div class="col offset-s4 s6">
+                <button class="btn waves-effect white-text green hoverable" type="submit">
+                  Sign Up<i class="material-icons right">check</i>
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <!-- LOGIN PAGE -->
+
+      <section id="login-view">
+        <p class="header flow-text center">Welcome back! Login with your Tipp account details.
+        </p>
+        <form id="tipp-login" class="center">
+          <div class="form-page">
+            <div class="field-group row z-depth-1">
+              <div class="input-field email col s12">
+                <input type="email" id="tipp-login-email" required>
+                <label for="tipp-login-email">Email
+                </label>
+              </div>
+              <div class="input-field passphrase col s12">
+                <input type="password" id="tipp-login-passphrase" required>
+                <label for="tipp-login-passphrase">Passphrase
+                </label>
+              </div>
+            </div>
+            <div class="input-field row">
+              <div class="col s12">
+                <button class="btn waves-effect white-text green hoverable" type="submit">
+                  Login<i class="material-icons right">account_circle</i>
+                </button>
+              </div>
+            </div>
+            <div class="input-field row">
+              <div class="col s12">
+                <button id="forgot-passphrase-btn" data-target="passphrase-reset-modal" class="modal-trigger btn-flat waves-effect waves-green" type="button">
+                  Forgot your passphrase?
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </section>
+
+      <!-- LOADING SCREEN MODAL -->
+
+      <div class="center tipp-preloader-modal">
+        <p class="header flow-text center">
+        </p>
+        <div class="tipp-preloader preloader-wrapper active">
+          <div class="spinner-layer spinner-green-only">
+            <div class="circle-clipper left">
+              <div class="circle"></div>
+            </div>
+            <div class="gap-patch">
+              <div class="circle"></div>
+            </div>
+            <div class="circle-clipper right">
+              <div class="circle"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PASSPHRASE RESET MODAL -->
+
+      <div id="passphrase-reset-modal" class="modal">
+        <div class="modal-content">
+          <form id="tipp-passphrase-reset">
+            <div class="row">
+              <div class="col s12">
+                <h5 class="light">Enter your account email</h5>
+              </div>
+            </div>
+            <div class="row">
+              <div class="input-field email col s12">
+                <input type="email" id="passphrase-reset-email" required>
+                <label for="passphrase-reset-email">Email
+                </label>
+              </div>
+              <div class="input-field email col s12">
+                <input type="text" id="passphrase-reset-email-repeat" required>
+                <label for="passphrase-reset-email-repeat">Re-type Email
+                </label>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <a href="#" class="modal-action modal-close waves-effect btn-flat left">Close
+          </a>
+          <button class="modal-action btn-flat waves-effect green lighten-4" type="submit" form="tipp-passphrase-reset">
+            Send Reset Link<i class="material-icons right">send</i>
+          </button>
+        </div>
+      </div>
+
+      <script src="js/jquery-3.2.1.min.js"></script>
+      <script src="js/materialize.min.js"></script>
+      <script src="js/splash.js"></script>
+    </body>
+  </html>

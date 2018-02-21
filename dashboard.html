@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+  <html>
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta http-equiv="X-UA-Compatible" content="ie=edge">
+      <title>Tipp | Dashboard</title>
+
+      <link href="css/materialize.min.css" rel="stylesheet">
+      <link href="css/dashboard.css" rel="stylesheet">
+    </head>
+    <body>
+
+      <!-- TIPP PROFILE (FOR DASHBOARD.HTML WITH NO DASHBOARD) -->
+
+      <ul class="side-nav" id="tipp-profile">
+        <li>
+          <div class="user-view">
+            <div class="background">
+              <img src="img/default_profile_bg.jpg">
+            </div>
+            <ul>
+              <li><a href="#"><img class="circle profile-pic" src="img/default_profile_pic.png"></a></li>
+              <li><a href="#"><span class="white-text name"></span></a></li>
+              <li><a href="#"><span class="white-text username"></span></a></li>
+            </ul>
+          </div>
+        </li>
+
+        <li id="stripe-account"><a class="subheader">Stripe Account
+        </a></li>
+        <li id="stripe-dashboard-btn"><a class="btn waves-effect waves-light white-text blue">My Stripe Dashboard
+        </a></li>
+        <li id="stripe-connect-btn"><a class="btn waves-effect waves-light white-text blue">Connect Stripe Account
+        </a></li>
+        <li><div class="divider"></div></li>
+
+        <li id="yt-account"><a class="subheader">YouTube Channels
+        </a></li>
+        <li id="yt-connect-btn"><a class="waves-effect" href="#"><i class="material-icons red-text">add_circle</i>Add YouTube Account
+        </a></li>
+        <li><div class="divider"></div></li>
+
+        <li id="tipp-account"><a class="subheader">Tipp Account
+        </a></li>
+        <li id="logout-btn"><a class="waves-effect" href="#"><i class="material-icons">power_settings_new</i>Logout
+        </a></li>
+        <li><a class="waves-effect red lighten-5 modal-trigger" href="#delete-account-modal"><i class="material-icons">warning</i>Delete Account
+        </a></li>
+        <li><div class="divider"></div></li>
+      </ul>
+
+      <!-- NAVBAR -->
+
+      <!-- <nav>
+        <div class="nav-wrapper white">
+          <a href="" class="tipp-logo brand-logo left">
+            <img src="img/tipp_brand.png" alt="brand logo">
+          </a>
+          <a href="" data-activates="dashboard-side-nav" class="hamburger right btn btn-floating white button-collapse z-depth-0"><i class="material-icons">menu
+          </i></a>
+          <ul class="side-nav" id="dashboard-side-nav">
+            <li>
+              <div class="user-view">
+                <div class="background">
+                  <img src="img/default_profile_bg.jpg">
+                </div>
+                <a href="#"><img class="circle profile-pic materialboxed" src="img/default_profile_pic.png"></a>
+                <a href="#"><span class="white-text name">
+                </span></a>
+                <a href="#"><span class="white-text username">
+                </span></a>
+              </div>
+            </li>
+
+            <li id="stripe-account"><a class="subheader">Stripe
+            </a></li>
+            <li id="stripe-dashboard-btn"><a class="btn waves-effect waves-light white-text blue">My Stripe Dashboard
+            </a></li>
+            <li id="stripe-connect-btn"><a class="btn waves-effect waves-light white-text blue">Connect Stripe
+            </a></li>
+            <li><div class="divider"></div></li>
+
+            <li id="yt-account"><a class="subheader">YouTube
+            </a></li>
+            <li id="yt-connect-btn"><a class="waves-effect" href="#"><i class="material-icons red-text">add_circle</i>Add YouTube Account
+            </a></li>
+            <li><div class="divider"></div></li>
+
+            <li id="tipp-account"><a class="subheader">Account
+            </a></li>
+            <li id="logout-btn"><a class="waves-effect" href="#"><i class="material-icons">power_settings_new</i>Logout
+            </a></li>
+            <li><div class="divider"></div></li>
+          </ul>
+        </div>
+      </nav> -->
+
+      <!-- DASHBOARD -->
+
+      <!-- <section id="tipp-dashboard" class="center">
+        <div class="recent-tipps">
+          <ul class="collection with-header">
+            <li class="collection-header"><h6>Recent Tipps - Given</h6></li>
+            <li class="collection-item"><div>Alvin<a class="secondary-content"><i class="material-icons">send</i></a></div></li>
+            <li class="collection-item"><div>Alvin<a class="secondary-content"><i class="material-icons">send</i></a></div></li>
+            <li class="collection-item"><div>Alvin<a class="secondary-content"><i class="material-icons">send</i></a></div></li>
+            <li class="collection-item"><div>Alvin<a class="secondary-content"><i class="material-icons">send</i></a></div></li>
+          </ul>
+        </div>
+      </section> -->
+
+      <!-- LOADING SCREEN MODAL -->
+
+      <div class="center tipp-preloader-modal">
+        <p class="msg flow-text center">
+        </p>
+        <div class="tipp-preloader preloader-wrapper active">
+          <div class="spinner-layer spinner-green-only">
+            <div class="circle-clipper left">
+              <div class="circle"></div>
+            </div>
+            <div class="gap-patch">
+              <div class="circle"></div>
+            </div>
+            <div class="circle-clipper right">
+              <div class="circle"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DELETE ACCOUNT MODAL -->
+
+      <div id="delete-account-modal" class="modal bottom-sheet">
+        <div class="modal-content">
+          <h4>Warning!</h4>
+          <p class="flow-text">
+            Deleting your Tipp account is irreversible.
+            All YouTube channels associated with this account will no longer be able to receive donations.
+            Any YouTube or Tipp data associated with this account will be deleted.
+            All Stripe account information, however, will still be preserved by Stripe.
+            Are you sure you want to continue?
+          </p>
+        </div>
+        <div class="modal-footer">
+          <a id="delete-account-btn" href="#" class="modal-action modal-close waves-effect red lighten-5 btn-flat">Delete My Account
+          </a>
+        </div>
+      </div>
+      
+      <script src="js/jquery-3.2.1.min.js"></script>
+      <script src="js/materialize.min.js"></script>
+      <script src="js/dashboard.js"></script>
+    </body>
+  </html>
