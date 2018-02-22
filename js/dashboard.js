@@ -35,8 +35,8 @@ console.log("DASHBOARD SCRIPT EXECUTED");
             // insert user's connected channels into UI
             insertYTChannelList(acc.channels, '#yt-account');
         }
-        // show appropriate dashboard notifications (from cached user)
-        // TODO: initToasts();
+        // show helpful messages if new user
+        initToasts();
         // dashboard is now ready
         setTimeout(() => closeLoadingScreen(), 700);
     }
@@ -153,23 +153,32 @@ console.log("DASHBOARD SCRIPT EXECUTED");
     // ------------------------------
 
 
-    // // TODO: initializes any relevant call to action toasts displayed in
-    // // the dashboard upon logging in
-    // function initToasts() {
-    //   // let ytToast = getCachedValue('seenYoutubeToast');
-    //   // let stripeToast = getCachedValue('seenStripeToast');
-
-    //   // // message for toast 1
-    //   // // direct user to add a YT account
-    //   // 'Your subscribers can now Tipp you on the video '+
-    //   // 'pages of your connected YouTube channels! '+
-    //   // 'Add some if you haven\t already.';
-
-    //   // // message for toast 2
-    //   // // direct user to create/connect a Stripe account
-    //   // 'Thank you for using Tipp. Next, in order to receive '+
-    //   // 'Tipps from your subscribers, connect a Stripe account!';
-    // }
+    // TODO: initializes any relevant call to action toasts displayed in
+    // the dashboard upon logging in
+    function initToasts() {
+        const newUser = getCachedValue('tipp_account').newUser;
+        if(newUser) {
+            // step 1 (if new user, show a helpful, dismissable toast chain)
+            M.toast({
+                html: '1 of 3: Now, add a YouTube channel.',
+                classes: 'red white-text',
+                callback: () => {
+                    // step 2
+                    M.toast({
+                        html: '2 of 3: Then, connect a Stripe account.',
+                        classes: 'blue white-text',
+                        callback: () => {
+                            // step 3
+                            M.toast({
+                                html: '3 of 3: You can now receive audience donations!',
+                                classes: 'green white-text'
+                            });
+                        }
+                    });
+                }
+            });
+        }
+    }
 
     // shows logout modal for a set time, then empties the user cache 
     // + redirects back to the login page
