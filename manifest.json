@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Tipp",
-  "description": "Allows YouTube creators to receive audience donations from a button on their video pages.",
+  "description": "Allows your YouTube audience to make donations without ever leaving your video.",
   "version": "0.1.0",
   "icons": {
     "16": "img/tipp_48x48.png",
