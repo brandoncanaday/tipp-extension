@@ -202,7 +202,7 @@ console.log('SPLASH SCRIPT EXECUTED');
     function submitPassphraseResetForm(e) {
         e.preventDefault();
         // clean form errors every submission
-        removeValidationError('#tipp-passphrase-reset .field-group');
+        removeValidationError('#tipp-passphrase-reset');
         // grab everything we need
         const email = $('#passphrase-reset-email').val();
         const email_repeat = $('#passphrase-reset-email-repeat').val();
@@ -210,7 +210,7 @@ console.log('SPLASH SCRIPT EXECUTED');
         const err = validatePassphraseResetEmail(email, email_repeat);
         if(err.type) {
             // simple input validation error
-            showValidationError('#tipp-passphrase-reset .field-group', err);
+            showValidationError('#tipp-passphrase-reset', err);
         } else {
             // disable submit button
             document.querySelector('#passphrase-reset-modal button[type=submit]').disabled = true;
@@ -225,12 +225,15 @@ console.log('SPLASH SCRIPT EXECUTED');
                 setTimeout(() => {
                     if(response.error) {
                         // error sending reset link email
-                        showValidationError('#tipp-passphrase-reset .field-group', response.error);
+                        showValidationError('#tipp-passphrase-reset', response.error);
                         closeLoadingScreen();
                     } else {
                         // passphrase reset link sent to user, so close modal
                         closeLoadingScreen();
                         $('#passphrase-reset-modal').modal('close');
+                        // reset values for next time
+                        $('#passphrase-reset-email').val('');
+                        $('#passphrase-reset-email-repeat').val('');
                     }
                     // enable submit button
                     document.querySelector('#passphrase-reset-modal button[type=submit]').disabled = false;
