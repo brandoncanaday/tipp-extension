@@ -124,7 +124,7 @@ console.log("DASHBOARD SCRIPT EXECUTED");
 
     // handles when user wants to delete their Tipp account
     function handleDeleteAccount() {
-        openLoadingScreen('Deleting your Tipp account...', 'green');
+        openLoadingScreen('', 'green');
         // send request to delete user
         setTimeout(() => {
             chrome.runtime.sendMessage({
