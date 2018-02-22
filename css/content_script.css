@@ -579,10 +579,13 @@
 }
 
 .tipp-call-to-action {
-  text-align: left !important;
   padding: 2em !important;
   width: 250px !important;
   left: -140px !important;
+}
+
+.tipp-call-to-action p {
+  text-align: left !important;
 }
 
 .tipp-call-to-action p,

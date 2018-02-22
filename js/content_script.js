@@ -202,14 +202,13 @@ console.log("CONTENT SCRIPT LOADED");
     // creates and returns a call to action for the user, as a popup
     // when clicking on the Tipp button
     function createCallToAction() {
-        const COMMENT = "Hey, so I just tried to Tipp you a little donation for "+
-        "making a solid video, but here's the thing: Either \n\n"+
-        "1) you haven't downloaded the Tipp Chrome extension + created an account yet, or \n\n"+
-        "2) you haven't connected this YouTube channel and a Stripe account to it. \n\n"+
-        "So yeah, go do that, and then let your fellow creators know to do the same, so they can benefit as well."+
-        "If you want more information, just visit their website:\n\n"+
-        "https://tippextension.com\n\n"+
-        "I'll try to make it up to you next upload ;)";
+        const COMMENT = "Hey, so I just tried to give you a little donation for making a solid video, "+ 
+                        "but here's the thing: Either \n\n"+
+                        "1) you haven't downloaded the Tipp Chrome extension + created an account yet, or \n\n"+
+                        "2) you still need to connect this YouTube channel and a Stripe account to it. \n\n"+
+                        "So yeah, go do that, and then let other creators know to do the same so they can benefit as well. "+
+                        "If you want more information, just visit their website:\n\nhttps://tippextension.com\n\n"+
+                        "Do it now so you can start receiving donations on this channel next time you upload!";
         const $callToAction = document.createElement('div');
         $callToAction.className += ' tipp-form tipp-popup tipp-call-to-action tipp-scale-transition tipp-scale-out';
         
