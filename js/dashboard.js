@@ -5,11 +5,9 @@ console.log("DASHBOARD SCRIPT EXECUTED");
 
     // init side nav trigger
     M.Sidenav.init(document.querySelector('.side-nav'));
-    // $('.hamburger').sideNav();
 
     // init all modals
     M.Modal.init(document.querySelectorAll('.modal'));
-    $('.modal').modal();
 
     // init Tipp dashboard
     initTippDashboard();
@@ -20,6 +18,7 @@ console.log("DASHBOARD SCRIPT EXECUTED");
     document.querySelector('#logout-btn a').addEventListener('click', logout);
     document.querySelector('#yt-connect-btn a').addEventListener('click', handleYTConnect);
     document.querySelector('#delete-account-btn').addEventListener('click', handleDeleteAccount);
+    $(document).on('click', '.dismiss-toast', dismissToast);
 
     // initializes the entire dashboard for the newly logged-in Tipp user
     function initTippDashboard() {
@@ -37,10 +36,12 @@ console.log("DASHBOARD SCRIPT EXECUTED");
             // insert user's connected channels into UI
             insertYTChannelList(acc.channels, '#yt-account');
         }
-        // show helpful messages if new user
-        initToasts();
         // dashboard is now ready
-        setTimeout(() => closeLoadingScreen(), 700);
+        setTimeout(() => {
+            closeLoadingScreen();
+            // show helpful messages (if new user)
+            initToasts();
+        }, 700);
     }
 
     // handles when user clicks the button to create a Stripe account
@@ -158,28 +159,41 @@ console.log("DASHBOARD SCRIPT EXECUTED");
     // TODO: initializes any relevant call to action toasts displayed in
     // the dashboard upon logging in
     function initToasts() {
-        const newUser = getCachedValue('tipp_account').newUser;
-        if(newUser) {
-            // step 1 (if new user, show a helpful, dismissable toast chain)
+        const user = getCachedValue('tipp_account');
+        // show helpful toasts only if user hasnt finished setting up Tipp account
+        if(!user.channels.length || !user.stripe) {
+            // step 1
             M.toast({
-                html: '1 of 3: Now, add a YouTube channel.',
+                html: '<span>1) Add a YouTube channel.</span>'+
+                        '<i class="material-icons right white-text dismiss-toast">close</i>',
                 classes: 'red white-text',
-                callback: () => {
+                displayLength: 5000,
+                completeCallback: () => {
                     // step 2
                     M.toast({
-                        html: '2 of 3: Then, connect a Stripe account.',
+                        html: '<span>2) Connect a Stripe account.</span>'+
+                                '<i class="material-icons right white-text dismiss-toast">close</i>',
                         classes: 'blue white-text',
-                        callback: () => {
+                        displayLength: 5000,
+                        completeCallback: () => {
                             // step 3
                             M.toast({
-                                html: '3 of 3: You can now receive audience donations!',
-                                classes: 'green white-text'
+                                html: '<span>3) Receive donations!</span>'+
+                                        '<i class="material-icons right white-text dismiss-toast">close</i>',
+                                classes: 'green white-text',
+                                displayLength: 5000
                             });
                         }
                     });
                 }
             });
         }
+    }
+
+    // dismisses a toast programatically when close icon is clicked
+    function dismissToast(e) {
+        const toast = M.Toast.getInstance(e.target.parentElement);
+        toast.dismiss();
     }
 
     // shows logout modal for a set time, then empties the user cache 
@@ -199,7 +213,8 @@ console.log("DASHBOARD SCRIPT EXECUTED");
     // as well as the main dashboard call to action and the
     // My Stripe Dashboard button (disabled or not)
     function initStripeButtons() {
-        if(getCachedValue('tipp_account').stripe) {
+        const user = getCachedValue('tipp_account');
+        if(user && user.stripe) {
             // user has connected a Stripe account
             document.querySelector('#stripe-dashboard-btn a').style.display = 'block';
             document.querySelector('#stripe-connect-btn a').style.display = 'none';

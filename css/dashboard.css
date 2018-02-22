@@ -167,3 +167,7 @@ html, body {
 #tipp-profile .user-view li a:hover {
   background: none;
 }
+
+.dismiss-toast {
+  cursor: pointer;
+}
