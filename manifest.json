@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Tipp",
-  "description": "Allows your YouTube audience to make donations without ever leaving your video.",
+  "description": "Allows YouTube creators to receive audience donations from a button on their video pages.",
   "version": "0.1.0",
   "icons": {
     "16": "img/tipp_48x48.png",
@@ -22,17 +22,17 @@
         "https://www.youtube.com/*"
       ],
       "css": [
-        "css/content_script.css"
+        "css/content_script.min.css"
       ],
       "js": [
-        "js/content_script.js"
+        "js/content_script.min.js"
       ]
     }
   ],
   "background": {
     "scripts": [
       "js/jquery-3.2.1.min.js",
-      "js/background.js"
+      "js/background.min.js"
     ],
     "persistent": false
   },
@@ -43,7 +43,6 @@
     "https://connect.stripe.com/*",
     "https://checkout.stripe.com/*",
     "https://tippextension.com/*",
-    "https://staging.tippextension.com/*",
     "https://www.youtube.com/*"
   ],
   "web_accessible_resources": [
