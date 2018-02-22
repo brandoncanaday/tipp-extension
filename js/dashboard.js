@@ -4,9 +4,11 @@ console.log("DASHBOARD SCRIPT EXECUTED");
 (function() {
 
     // init side nav trigger
-    $('.hamburger').sideNav();
+    M.Sidenav.init(document.querySelector('.side-nav'));
+    // $('.hamburger').sideNav();
 
     // init all modals
+    M.Modal.init(document.querySelectorAll('.modal'));
     $('.modal').modal();
 
     // init Tipp dashboard
