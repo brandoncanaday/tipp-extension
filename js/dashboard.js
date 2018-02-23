@@ -168,6 +168,7 @@ console.log("DASHBOARD SCRIPT EXECUTED");
                         '<i class="material-icons right white-text dismiss-toast">close</i>',
                 classes: 'red white-text',
                 displayLength: 5000,
+                outDuration: 300,
                 completeCallback: () => {
                     // step 2
                     M.toast({
@@ -175,13 +176,15 @@ console.log("DASHBOARD SCRIPT EXECUTED");
                                 '<i class="material-icons right white-text dismiss-toast">close</i>',
                         classes: 'blue white-text',
                         displayLength: 5000,
+                        outDuration: 300,
                         completeCallback: () => {
                             // step 3
                             M.toast({
                                 html: '<span>3) Receive donations!</span>'+
                                         '<i class="material-icons right white-text dismiss-toast">close</i>',
                                 classes: 'green white-text',
-                                displayLength: 5000
+                                displayLength: 5000,
+                                outDuration: 300
                             });
                         }
                     });
