@@ -445,6 +445,7 @@ console.log('BACKGROUND SCRIPT EXECUTED');
                 if(!data.error) {
                     // email and passphrase were correct. cache the user
                     setCachedValue('tipp_account', data.user);
+                    chrome.browserAction.setPopup({ popup: 'dashboard.html' });
                     sendResponse({});
                 } else {
                     // send error back to login form
@@ -636,6 +637,9 @@ console.log('BACKGROUND SCRIPT EXECUTED');
             NOTIFICATION.accountDeletion.success.title,
             NOTIFICATION.accountDeletion.success.message
         );
+        // empty user cache
+        setCachedValue('tipp_account', {});
+        chrome.browserAction.setPopup({ popup: 'splash.html' });
         return sendResponse((obj) ? obj : {});
     }
 
@@ -756,6 +760,7 @@ console.log('BACKGROUND SCRIPT EXECUTED');
             NOTIFICATION.accountCreation.success.title,
             NOTIFICATION.accountCreation.success.message
         );
+        chrome.browserAction.setPopup({ popup: 'dashboard.html' });
         return sendResponse((obj) ? obj : {});
     }
 
@@ -776,6 +781,7 @@ console.log('BACKGROUND SCRIPT EXECUTED');
         );
         // empty user cache
         setCachedValue('tipp_account', {});
+        chrome.browserAction.setPopup({ popup: 'splash.html' });
         return sendResponse((obj) ? obj : {});
     }
 
@@ -824,12 +830,6 @@ console.log('BACKGROUND SCRIPT EXECUTED');
         const acc = getCachedValue('tipp_account');
         return (acc && acc.jwt) ? true : false;
     }
-
-    // // checks if user has Stripe-enabled Tipp account
-    // function hasStripeAccount() {
-    //   let acc = getCachedValue('tipp_account');
-    //   return (acc.stripe['stripe_user_id']) ? true : false;
-    // }
 
     // returns the logged-in user's JWT to pass in auth header
     function getJWT() {

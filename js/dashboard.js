@@ -161,6 +161,7 @@ console.log("DASHBOARD SCRIPT EXECUTED");
         setTimeout(() => {
             // empty cached user info
             setCachedValue('tipp_account', {});
+            chrome.browserAction.setPopup({ popup: 'splash.html' });
             // redirect back to login page
             window.location.replace(chrome.runtime.getURL('splash.html'));
         }, 700);
