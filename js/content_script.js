@@ -1,10 +1,8 @@
 
-console.log("CONTENT SCRIPT LOADED");
-
 (function() {
 
     // this will be changed when deploying new release
-    const LIVE_DOMAIN_URL = 'https://staging.tippextension.com';
+    const LIVE_DOMAIN_URL = 'https://tippextension.com';
 
     runInitCode();
 
@@ -12,12 +10,10 @@ console.log("CONTENT SCRIPT LOADED");
     function runInitCode() {
         // when YT is done changing to new video (for new youtube design)
         window.addEventListener("yt-navigate-finish", () => {
-            console.log('yt-navigate-finish event handler called'); // DEBUG
             if(window.location.pathname == '/watch') prepareVideoPage();
         });
         // when YT is done changing to new video (for old youtube design)
         window.addEventListener("spfdone", () => {
-            console.log('spfdone event handler called'); // DEBUG
             if(window.location.pathname == '/watch') prepareVideoPage();
         });
         // listen for postMessage after Stripe Checkout submission

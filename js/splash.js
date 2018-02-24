@@ -1,6 +1,4 @@
 
-console.log('SPLASH SCRIPT EXECUTED');
-
 (function() {
 
     // init all modals

@@ -1,11 +1,9 @@
 
-console.log('BACKGROUND SCRIPT EXECUTED');
-
 (function() {
 
     // these will be changed when deploying new release
-    const LIVE_DOMAIN_URL = 'https://staging.tippextension.com';
-    const STRIPE_CLIENT_ID = 'ca_BZRHmzhOuOKgiOM4u2GaqcEy9wkqM4Dn';
+    const LIVE_DOMAIN_URL = 'https://tippextension.com';
+    const STRIPE_CLIENT_ID = 'ca_BZRHiuMtqh9sQR9j0zHNf4bOIhJ3AB4Q';
 
     // google stuff
     const GOOGLE_API_KEY   = 'AIzaSyDXr947mAu05wahjTLGZ-0ShCtyu2NVm_g';
@@ -20,10 +18,6 @@ console.log('BACKGROUND SCRIPT EXECUTED');
     const STRIPE_OAUTH_URL = 'https://connect.stripe.com/express/oauth/authorize'+
                                 '?redirect_uri=https%3A%2F%2F'+chrome.runtime.id+'.chromiumapp.org&'+
                                 'client_id='+STRIPE_CLIENT_ID;
-    // const GITHUB_CLIENT_ID = 'db209c2ac723da32da6e';
-    // const GITHUB_OAUTH_URL = 'https://github.com/login/oauth/authorize?client_id='+
-    //                             '?redirect_uri=https%3A%2F%2F'+chrome.runtime.id+'.chromiumapp.org&'+
-    //                             'client_id='+GITHUB_CLIENT_ID;
 
     const NOTIFICATION = {
         'accountCreation': {
@@ -147,7 +141,6 @@ console.log('BACKGROUND SCRIPT EXECUTED');
             performTipp(request.data, sendResponse);
             return true;
         default:
-            console.log('message not recognized');
         }
     }
 
