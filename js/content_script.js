@@ -12,12 +12,12 @@ console.log("CONTENT SCRIPT LOADED");
     function runInitCode() {
         // when YT is done changing to new video (for new youtube design)
         window.addEventListener("yt-navigate-finish", () => {
-            console.log('yt-navigate-finish event handler called!'); // DEBUG
+            console.log('yt-navigate-finish event handler called'); // DEBUG
             if(window.location.pathname == '/watch') prepareVideoPage();
         });
         // when YT is done changing to new video (for old youtube design)
         window.addEventListener("spfdone", () => {
-            console.log('spfdone event handler called!'); // DEBUG
+            console.log('spfdone event handler called'); // DEBUG
             if(window.location.pathname == '/watch') prepareVideoPage();
         });
         // listen for postMessage after Stripe Checkout submission
@@ -90,12 +90,6 @@ console.log("CONTENT SCRIPT LOADED");
         $tipp.appendChild($img);
         $tipp.appendChild($popup);
         $tipp.appendChild($loginPrompt);
-
-        // let $tippContent = document.createElement('span');
-        // $tippContent.className += ' tipp-ext-btn-content';
-        // $tippContent.className += ' yt-uix-button-content';
-        // $tippContent.textContent = content;
-        // $tipp.appendChild($tippContent);
 
         return $tipp;
     }
@@ -202,13 +196,18 @@ console.log("CONTENT SCRIPT LOADED");
     // creates and returns a call to action for the user, as a popup
     // when clicking on the Tipp button
     function createCallToAction() {
-        const COMMENT = "Hey, so I just tried to give you a little donation for making a solid video, "+ 
-                        "but here's the thing: Either \n\n"+
-                        "1) you haven't downloaded the Tipp Chrome extension + created an account yet, or \n\n"+
-                        "2) you still need to connect this YouTube channel and a Stripe account to it. \n\n"+
-                        "So yeah, go do that, and then let other creators know to do the same so they can benefit as well. "+
-                        "If you want more information, just visit their website:\n\nhttps://tippextension.com\n\n"+
-                        "Do it now so you can start receiving donations on this channel next time you upload!";
+        const COMMENT = "Hey, so I just wanted to say that I'm a long-time fan, "+
+                        "and I appreciate all the content you put out on a regular basis. "+
+                        "Also, I just tried to donate to your video here, but in order for me "+
+                        "to be able to do that, you have to install this Chrome extension called Tipp.\n\n"+
+                        "If you want more information, just visit their website, "+
+                        "but it basically just allows people like me, who want to give a bit more than a Like, "+
+                        "to make a donation on your video.\n\n"+
+                        "If you let your audience know they should download it, too, "+
+                        "then they'll be able to start giving out donations where they see fit "+
+                        "(as well as being able to receive donations themselves).\n\n"+
+                        "Anyways, keep up the great work!";
+
         const $callToAction = document.createElement('div');
         $callToAction.className += ' tipp-form tipp-popup tipp-call-to-action tipp-scale-transition tipp-scale-out';
         

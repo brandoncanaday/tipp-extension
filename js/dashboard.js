@@ -18,7 +18,6 @@ console.log("DASHBOARD SCRIPT EXECUTED");
     document.querySelector('#logout-btn a').addEventListener('click', logout);
     document.querySelector('#yt-connect-btn a').addEventListener('click', handleYTConnect);
     document.querySelector('#delete-account-btn').addEventListener('click', handleDeleteAccount);
-    $(document).on('click', '.dismiss-toast', dismissToast);
 
     // initializes the entire dashboard for the newly logged-in Tipp user
     function initTippDashboard() {
@@ -39,8 +38,6 @@ console.log("DASHBOARD SCRIPT EXECUTED");
         // dashboard is now ready
         setTimeout(() => {
             closeLoadingScreen();
-            // show helpful messages (if new user)
-            initToasts();
         }, 700);
     }
 
@@ -155,49 +152,6 @@ console.log("DASHBOARD SCRIPT EXECUTED");
     // ---------- HELPERS -----------
     // ------------------------------
 
-
-    // TODO: initializes any relevant call to action toasts displayed in
-    // the dashboard upon logging in
-    function initToasts() {
-        const user = getCachedValue('tipp_account');
-        // show helpful toasts only if user hasnt finished setting up Tipp account
-        if(!user.channels.length || !user.stripe) {
-            // step 1
-            M.toast({
-                html: '<span>1) Add a YouTube channel.</span>'+
-                        '<i class="material-icons right white-text dismiss-toast">close</i>',
-                classes: 'red white-text',
-                displayLength: 5000,
-                outDuration: 300,
-                completeCallback: () => {
-                    // step 2
-                    M.toast({
-                        html: '<span>2) Connect a Stripe account.</span>'+
-                                '<i class="material-icons right white-text dismiss-toast">close</i>',
-                        classes: 'blue white-text',
-                        displayLength: 5000,
-                        outDuration: 300,
-                        completeCallback: () => {
-                            // step 3
-                            M.toast({
-                                html: '<span>3) Receive donations!</span>'+
-                                        '<i class="material-icons right white-text dismiss-toast">close</i>',
-                                classes: 'green white-text',
-                                displayLength: 5000,
-                                outDuration: 300
-                            });
-                        }
-                    });
-                }
-            });
-        }
-    }
-
-    // dismisses a toast programatically when close icon is clicked
-    function dismissToast(e) {
-        const toast = M.Toast.getInstance(e.target.parentElement);
-        toast.dismiss();
-    }
 
     // shows logout modal for a set time, then empties the user cache 
     // + redirects back to the login page
