@@ -36,9 +36,17 @@ console.log("CONTENT SCRIPT LOADED");
         // check if channel owner of new video has Stripe-enabled Tipp account
         getStripeUserFromYTVideo(v, (stripeUser) => {
             // add appropriate kind of Tipp button to the page.
-            let $container = document.getElementById('watch8-action-buttons');
             let $tippButton = createTippButton(stripeUser);
-            appendTippButton($container, $tippButton);
+            // check if need to append to old youtube layout or new youtube layout
+            let $container = document.getElementById('watch8-action-buttons');
+            if($container) {
+                // old youtube layout
+                appendTippButton($container, $tippButton, false);
+            } else {
+                // new youtube layout
+                $container = document.querySelector('#info.ytd-video-primary-info-renderer');
+                appendTippButton($container, $tippButton, true);
+            }
             // load AutoNumeric into page to enable Tipp amount formatting
             if(stripeUser) addAutoNumericToPage();
             // add Stripe Checkout submit interceptor to YT page
@@ -75,7 +83,7 @@ console.log("CONTENT SCRIPT LOADED");
         $tipp.className += ' tipp-ext-btn';
         $tipp.className += ' yt-uix-button-group';
         $tipp.className += ' yt-uix-tooltip';
-        $tipp.setAttribute('data-tooltip-text', 'Tipp me!');
+        $tipp.setAttribute('data-tooltip-text', 'Tipp me');
         $tipp.setAttribute('data-destination', stripeUser.stripeId);
         $tipp.setAttribute('data-fname', stripeUser.fname);
         $tipp.setAttribute('data-lname', stripeUser.lname);
@@ -84,8 +92,9 @@ console.log("CONTENT SCRIPT LOADED");
             tippIconButtonClickHandler($tipp, $popup, $loginPrompt);
         });
 
-        $img.setAttribute('src', chrome.extension.getURL('img/tipp_48x48.png'));
-        $img.style.maxHeight = '28px';
+        $img.setAttribute('src', chrome.extension.getURL('img/tipp-icon-btn.svg'));
+        $img.style.height = '26px';
+        $img.style.width = '26px';
 
         $tipp.appendChild($img);
         $tipp.appendChild($popup);
@@ -106,7 +115,7 @@ console.log("CONTENT SCRIPT LOADED");
                                 'oninvalid="this.setCustomValidity(\'You must enter an amount.\')" '+
                                 'oninput="this.setCustomValidity(\'\')" '+
                                 'autocomplete="off" required>'+
-                        '<label for="tipp-amount">Enter Tipp Amount'+
+                        '<label for="tipp-amount">Enter Amount'+
                         '</label>'+
                       '</div>'+
                       '<button class="tipp-btn tipp-green tipp-hoverable" type="submit">Confirm'+
@@ -372,19 +381,19 @@ console.log("CONTENT SCRIPT LOADED");
         $tipp.classList.toggle('yt-uix-tooltip');
         document.querySelectorAll('.yt-uix-tooltip-tip').forEach(($tooltip) => {
             let content = $tooltip.querySelector('.yt-uix-tooltip-tip-content').textContent;
-            if(content == 'Tipp me!') $tooltip.style.display = 'none';
+            if(content == 'Tipp me') $tooltip.style.display = 'none';
         });
         if($popup.classList.contains('tipp-scale-in')) {
             // popup is showing, so hide it (and reset if popup is form)
             $popup.classList.remove('tipp-scale-in');
-            $tipp.setAttribute('data-tooltip-text', 'Tipp me!');
+            $tipp.setAttribute('data-tooltip-text', 'Tipp me');
             if(!$popup.classList.contains('tipp-call-to-action')) {
                 setTimeout(() => resetTippForm($popup), 200);
             }
         } else if($loginPrompt.classList.contains('tipp-scale-in')) {
             // login prompt is showing, so hide it
             $loginPrompt.classList.remove('tipp-scale-in');
-            $tipp.setAttribute('data-tooltip-text', 'Tipp me!');
+            $tipp.setAttribute('data-tooltip-text', 'Tipp me');
         } else {
             // both popup and login prompt not showing, so
             // first hide tooltips
@@ -407,14 +416,31 @@ console.log("CONTENT SCRIPT LOADED");
     }
 
     // appends the finished Tipp button element to the given container element
-    function appendTippButton($container, $tippButton) {
-        $container.appendChild($tippButton);
-        $container.addEventListener('mouseenter', () => {
-            $tippButton.classList.add('pulse');
-        });
-        $container.addEventListener('mouseleave', () => {
-            $tippButton.classList.remove('pulse');
-        });
+    function appendTippButton($container, $tippButton, newYT) {
+        // remove old button if still there
+        const $oldTippBtn = $container.querySelector('.tipp-ext-btn');
+        if($oldTippBtn) $oldTippBtn.parentNode.removeChild($oldTippBtn);
+        // append new button
+        if(!newYT) {
+            // old youtube layout
+            $container.appendChild($tippButton);
+            $container.addEventListener('mouseenter', () => {
+                $tippButton.classList.add('pulse');
+            });
+            $container.addEventListener('mouseleave', () => {
+                $tippButton.classList.remove('pulse');
+            });
+        } else {
+            // new youtube layout
+            let $flexNode = $container.querySelector('#flex');
+            $flexNode.parentNode.insertBefore($tippButton, $flexNode.nextSibling);
+            $container.addEventListener('mouseenter', () => {
+                $tippButton.classList.add('pulse');
+            });
+            $container.addEventListener('mouseleave', () => {
+                $tippButton.classList.remove('pulse');
+            });
+        }
     }
 
     // resets the Tipp amount form and all its values to a default state
@@ -426,7 +452,7 @@ console.log("CONTENT SCRIPT LOADED");
         $amountInput.value = "";
         $label.classList.remove('tipp-active');
         $amountInput.classList.remove('tipp-invalid');
-        $label.textContent = "Enter Tipp Amount";
+        $label.textContent = "Enter Amount";
         $amountInput.style.display = 'inline-block';
         $label.style.display = 'inline-block';
         $chooseAmount.style.display = 'inline-block';

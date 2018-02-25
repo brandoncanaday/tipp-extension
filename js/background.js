@@ -844,7 +844,7 @@ console.log('BACKGROUND SCRIPT EXECUTED');
 
     // synchronously gets JSON-parsed obj stored in localStorage[key]
     function getCachedValue(key) {
-        return JSON.parse(localStorage.getItem(key));
+        return JSON.parse(localStorage.getItem(key) ? localStorage.getItem(key) : '{}');
     }
 
     // gets value of given query string param in a given url

@@ -73,133 +73,133 @@
 
 @media only screen and (min-width: 360px) {
   .tipp-flow-text {
-    font-size: 1.2rem;
+    font-size: 1.2em;
   }
 }
 
 @media only screen and (min-width: 390px) {
   .tipp-flow-text {
-    font-size: 1.224rem;
+    font-size: 1.224em;
   }
 }
 
 @media only screen and (min-width: 420px) {
   .tipp-flow-text {
-    font-size: 1.248rem;
+    font-size: 1.248em;
   }
 }
 
 @media only screen and (min-width: 450px) {
   .tipp-flow-text {
-    font-size: 1.272rem;
+    font-size: 1.272em;
   }
 }
 
 @media only screen and (min-width: 480px) {
   .tipp-flow-text {
-    font-size: 1.296rem;
+    font-size: 1.296em;
   }
 }
 
 @media only screen and (min-width: 510px) {
   .tipp-flow-text {
-    font-size: 1.32rem;
+    font-size: 1.32em;
   }
 }
 
 @media only screen and (min-width: 540px) {
   .tipp-flow-text {
-    font-size: 1.344rem;
+    font-size: 1.344em;
   }
 }
 
 @media only screen and (min-width: 570px) {
   .tipp-flow-text {
-    font-size: 1.368rem;
+    font-size: 1.368em;
   }
 }
 
 @media only screen and (min-width: 600px) {
   .tipp-flow-text {
-    font-size: 1.392rem;
+    font-size: 1.392em;
   }
 }
 
 @media only screen and (min-width: 630px) {
   .tipp-flow-text {
-    font-size: 1.416rem;
+    font-size: 1.416em;
   }
 }
 
 @media only screen and (min-width: 660px) {
   .tipp-flow-text {
-    font-size: 1.44rem;
+    font-size: 1.44em;
   }
 }
 
 @media only screen and (min-width: 690px) {
   .tipp-flow-text {
-    font-size: 1.464rem;
+    font-size: 1.464em;
   }
 }
 
 @media only screen and (min-width: 720px) {
   .tipp-flow-text {
-    font-size: 1.488rem;
+    font-size: 1.488em;
   }
 }
 
 @media only screen and (min-width: 750px) {
   .tipp-flow-text {
-    font-size: 1.512rem;
+    font-size: 1.512em;
   }
 }
 
 @media only screen and (min-width: 780px) {
   .tipp-flow-text {
-    font-size: 1.536rem;
+    font-size: 1.536em;
   }
 }
 
 @media only screen and (min-width: 810px) {
   .tipp-flow-text {
-    font-size: 1.56rem;
+    font-size: 1.56em;
   }
 }
 
 @media only screen and (min-width: 840px) {
   .tipp-flow-text {
-    font-size: 1.584rem;
+    font-size: 1.584em;
   }
 }
 
 @media only screen and (min-width: 870px) {
   .tipp-flow-text {
-    font-size: 1.608rem;
+    font-size: 1.608em;
   }
 }
 
 @media only screen and (min-width: 900px) {
   .tipp-flow-text {
-    font-size: 1.632rem;
+    font-size: 1.632em;
   }
 }
 
 @media only screen and (min-width: 930px) {
   .tipp-flow-text {
-    font-size: 1.656rem;
+    font-size: 1.656em;
   }
 }
 
 @media only screen and (min-width: 960px) {
   .tipp-flow-text {
-    font-size: 1.68rem;
+    font-size: 1.68em;
   }
 }
 
 @media only screen and (max-width: 360px) {
   .tipp-flow-text {
-    font-size: 1.2rem;
+    font-size: 1.2em;
   }
 }
 
@@ -294,11 +294,10 @@
   border-bottom: 1px solid #9e9e9e !important;
   border-radius: 0 !important;
   outline: none !important;
-  height: 2.5rem;
   width: 100%;
-  font-size: 1rem;
+  font-size: 1.8em;
   margin: 0 0 20px 0;
-  padding: 0;
+  padding: .5em 0;
   -webkit-box-shadow: none;
   box-shadow: none;
   -webkit-box-sizing: content-box !important;
@@ -379,7 +378,8 @@
 
 .tipp-input-field {
   position: relative;
-  margin-top: 1rem;
+  margin-top: 1.5em !important;
+  font-size: 10px !important;
 }
 
 .tipp-input-field label {
@@ -388,7 +388,7 @@
   top: 0;
   left: 0;
   height: 100%;
-  font-size: 1rem;
+  font-size: 1.8em;
   cursor: text !important;
   -webkit-transition: -webkit-transform .2s ease-out !important;
   transition: -webkit-transform .2s ease-out !important;
@@ -399,8 +399,8 @@
   text-align: initial;
   /* -webkit-transform: translateY(12px) !important;
           transform: translateY(12px) !important; */
-  -webkit-transform: translateY(-1.7rem) scale(.8) !important;
-          transform: translateY(-1.7rem) scale(.8) !important;
+  -webkit-transform: translateY(-1.9em) scale(.7) !important;
+          transform: translateY(-1.9em) scale(.7) !important;
   pointer-events: none !important;
 }
 
@@ -495,9 +495,13 @@
   line-height: 28px !important;
   padding-left: 0 !important;
   padding-right: 0 !important;
-  margin-right: .3em !important;
+  margin-right: 1em !important;
   cursor: pointer !important;
   position: relative !important;
+  background: transparent !important;
+  border: none !important;
+  outline: none !important;
+  font-size: 10px !important;
 }
 
 .tipp-ext-btn:hover {
@@ -525,15 +529,19 @@
   background-color: rgba(0, 255, 0, 0.4) !important;
 }
 
+.tipp-ext-btn img {
+  margin-top: .3em !important;
+}
+
 .tipp-form {
   position: absolute !important;
   z-index: 9999 !important;
   overflow: hidden !important;
   width: 200px !important;
-  bottom: 3em !important;
-  left: -100px !important;
+  bottom: 3.5em !important;
+  left: -112px !important;
   background: #FFF !important;
-  padding: 1em !important;
+  padding: 2em 2em 1rem !important;
   -webkit-box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12), 0 3px 5px -1px rgba(0, 0, 0, 0.3) !important;
   box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12), 0 3px 5px -1px rgba(0, 0, 0, 0.3) !important;
   border-radius: .25em !important;
@@ -541,6 +549,7 @@
   line-height: 1.5;
   font-family: "Roboto", sans-serif;
   font-weight: normal;
+  font-size: 10px !important;
 }
 
 .tipp-btn {
@@ -549,11 +558,11 @@
   display: inline-block;
   height: 36px !important;
   line-height: 36px !important;
-  padding: 0 2rem !important;
+  padding: 0 2em !important;
   text-transform: uppercase !important;
   vertical-align: middle !important;
   -webkit-tap-highlight-color: transparent !important;
-  font-size: 1rem !important;
+  font-size: 1.5em !important;
   outline: 0 !important;
   text-decoration: none !important;
   color: #FFFFFF;
@@ -569,7 +578,7 @@
 }*/
 
 .tipp-btn i {
-  font-size: 1.3rem !important;
+  font-size: 1.3em !important;
   line-height: inherit !important;
 }
 
@@ -590,21 +599,22 @@
 
 .tipp-call-to-action p,
 .tipp-login-prompt p {
-  font-size: 1.2em !important;
+  font-size: 1.5em !important;
   font-family: 'Roboto', sans-serif !important;
   word-wrap: break-word !important;
   white-space: normal !important;
   word-break: normal !important;
-  margin: .5rem 0 !important;
+  margin: .5em 0 !important;
 }
 
 .tipp-amount-form {
-  padding: 2rem !important;
-  left: -120px !important
+  padding: 3em !important;
+  left: -120px !important;
+  font-size: 10px !important;
 }
 
 .tipp-amount-form img {
   width: 150% !important;
   margin-left: -25% !important;
-  margin-bottom: .7rem !important;
+  margin-bottom: .7em !important;
 }
