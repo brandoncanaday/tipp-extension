@@ -1,6 +1,4 @@
 
-console.log("DASHBOARD SCRIPT EXECUTED");
-
 (function() {
 
     // init side nav trigger

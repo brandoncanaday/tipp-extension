@@ -1,6 +1,4 @@
 
-console.log('BACKGROUND SCRIPT EXECUTED');
-
 (function() {
 
     // these will be changed when deploying new release

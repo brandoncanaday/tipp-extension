@@ -1,6 +1,4 @@
 
-console.log("CONTENT SCRIPT LOADED");
-
 (function() {
 
     // this will be changed when deploying new release
