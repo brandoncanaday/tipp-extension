@@ -1,6 +1,9 @@
 
 (function() {
 
+    // set browser action icon
+    chrome.browserAction.setIcon({ path: 'img/tipp-icon-btn.svg' });
+
     // these will be changed when deploying new release
     const LIVE_DOMAIN_URL = 'https://staging.tippextension.com';
     const STRIPE_CLIENT_ID = 'ca_BZRHmzhOuOKgiOM4u2GaqcEy9wkqM4Dn';
