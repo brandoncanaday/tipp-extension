@@ -1,10 +1,8 @@
 
-console.log("CONTENT SCRIPT LOADED");
-
 (function() {
 
     // this will be changed when deploying new release
-    const LIVE_DOMAIN_URL = 'https://staging.tippextension.com';
+    const LIVE_DOMAIN_URL = 'https://tippextension.com';
 
     runInitCode();
 
@@ -12,12 +10,10 @@ console.log("CONTENT SCRIPT LOADED");
     function runInitCode() {
         // when YT is done changing to new video (for new youtube design)
         window.addEventListener("yt-navigate-finish", () => {
-            console.log('yt-navigate-finish event handler called'); // DEBUG
             if(window.location.pathname == '/watch') prepareVideoPage();
         });
         // when YT is done changing to new video (for old youtube design)
         window.addEventListener("spfdone", () => {
-            console.log('spfdone event handler called'); // DEBUG
             if(window.location.pathname == '/watch') prepareVideoPage();
         });
         // listen for postMessage after Stripe Checkout submission
@@ -70,11 +66,6 @@ console.log("CONTENT SCRIPT LOADED");
     // 2) built with call-to-action message asking user to tell the creator
     // to create such an account.
     function createTippButton(stripeUser) {
-        stripeUser.stripeId = 'acct_1BUTsgDIAnKljw3D'; // REMOVE AFTER TESTING
-        stripeUser.fname = 'Nick'; // REMOVE AFTER TESTING
-        stripeUser.lname = 'Weinand'; // REMOVE AFTER TESTING
-        stripeUser.displayname = 'nickweinand'; // REMOVE AFTER TESTING
-
         let $tipp = document.createElement('button');
         let $img = document.createElement('img');
         let $popup = (stripeUser.stripeId) ? createTippAmountForm() : createCallToAction();

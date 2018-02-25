@@ -512,17 +512,6 @@
   background-color: transparent !important;
 }
 
-/*.tipp-ext-btn .tipp-ext-btn-content {
-  font-family: "YouTube Noto", "Roboto", arial, sans-serif !important;
-  vertical-align: text-bottom !important;
-  opacity: .5 !important;
-  margin-left: 6px !important;
-}
-
-.tipp-ext-btn .tipp-ext-btn-content.already-tipped {
-  color: green !important;
-}*/
-
 .tipp-ext-btn.pulse::before {
   z-index: 1 !important;
   border-radius: 50% !important;

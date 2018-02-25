@@ -1,6 +1,4 @@
 
-console.log("DASHBOARD SCRIPT EXECUTED");
-
 (function() {
 
     // init side nav trigger
@@ -281,7 +279,7 @@ console.log("DASHBOARD SCRIPT EXECUTED");
 
     // gets JSON-parsed obj stored in localStorage[key]
     function getCachedValue(key) {
-        return JSON.parse(localStorage.getItem(key));
+        return JSON.parse(localStorage.getItem(key) ? localStorage.getItem(key) : '{}');
     }
 
 })();
