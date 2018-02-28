@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Tipp (testing)",
-  "description": "Allows your YouTube audience to make donations without ever leaving your video.",
+  "description": "Allows your YouTube audience to make one-time donations to your videos without ever leaving the page.",
   "version": "0.0.0",
   "icons": {
     "16": "img/tipp_48x48.png",
