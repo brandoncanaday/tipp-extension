@@ -37,7 +37,7 @@
         <div id="tipp-register" class="center">
           <!-- first form page (basic info) -->
           <form class="form-page form-page-1">
-            <div class="field-group basic-information-fields row tooltipped z-depth-1" data-position="top" data-delay="50" data-tooltip="These will help others identify you">
+            <div class="field-group basic-information-fields row z-depth-1">
               <div class="input-field fname col s6">
                 <input type="text" id="tipp-fname" required>
                 <label for="tipp-fname">First Name
@@ -48,7 +48,7 @@
                 <label for="tipp-lname">Last Name
                 </label>
               </div>
-              <div class="input-field displayname col s12">
+              <div class="input-field displayname col s12 tooltipped" data-position="top" data-delay="50" data-tooltip="Identifies you to others">
                 <input type="text" id="tipp-displayname" required>
                 <label for="tipp-displayname">Display Name
                 </label>
@@ -64,13 +64,13 @@
           </form>
           <!-- second form page (login info) -->
           <form class="form-page form-page-2">
-            <div class="field-group login-information-fields row tooltipped z-depth-1" data-position="top" data-delay="50" data-tooltip="These will be used to log you in">
+            <div class="field-group login-information-fields row z-depth-1">
               <div class="input-field email col s12">
                 <input type="email" id="tipp-email" required>
                 <label for="tipp-email">Email
                 </label>
               </div>
-              <div class="input-field passphrase col s12">
+              <div class="input-field passphrase col s12 tooltipped" data-position="top" data-delay="50" data-tooltip="Must be at least 15 characters">
                 <input type="password" id="tipp-passphrase" required>
                 <label for="tipp-passphrase">Passphrase
                 </label>
