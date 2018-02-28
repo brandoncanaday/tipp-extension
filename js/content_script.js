@@ -2,7 +2,7 @@
 (function() {
 
     // this will be changed when deploying new release
-    const LIVE_DOMAIN_URL = 'https://staging.tippextension.com';
+    const LIVE_DOMAIN_URL = 'https://tippextension.com';
 
     runInitCode();
 
@@ -10,12 +10,10 @@
     function runInitCode() {
         // when YT is done changing to new video (for new youtube design)
         window.addEventListener("yt-navigate-finish", () => {
-            console.log('yt-navigate-finish event handler called'); // DEBUG
             if(window.location.pathname == '/watch') prepareVideoPage();
         });
         // when YT is done changing to new video (for old youtube design)
         window.addEventListener("spfdone", () => {
-            console.log('spfdone event handler called'); // DEBUG
             if(window.location.pathname == '/watch') prepareVideoPage();
         });
         // listen for postMessage after Stripe Checkout submission
@@ -68,11 +66,6 @@
     // 2) built with call-to-action message asking user to tell the creator
     // to create such an account.
     function createTippButton(stripeUser) {
-        stripeUser.stripeId = 'acct_1C0L5AH09iECdXAu'; // REMOVE AFTER TESTING
-        stripeUser.fname = 'Brandon'; // REMOVE AFTER TESTING
-        stripeUser.lname = 'Canaday'; // REMOVE AFTER TESTING
-        stripeUser.displayname = 'brandoncanadaytest'; // REMOVE AFTER TESTING
-
         let $tipp = document.createElement('button');
         let $img = document.createElement('img');
         let $popup = (stripeUser.stripeId) ? createTippAmountForm() : createCallToAction();
@@ -205,12 +198,12 @@
     function createCallToAction() {
         const COMMENT = "Hey, so I just wanted to say that I'm a long-time fan, "+
                         "and I appreciate all the content you put out on a regular basis. "+
-                        "Also, I just tried to donate to your video here, but in order for me "+
+                        "I was thinking about making a one-time donation to your video here, but in order for me "+
                         "to be able to do that, you have to install this Chrome extension called Tipp.\n\n"+
-                        "If you want more information, just visit their website, "+
-                        "but it basically just allows people like me, who want to give a bit more than a Like, "+
-                        "to make a donation on your video.\n\n"+
-                        "If you let your audience know they should download it, too, "+
+                        "If you want more information, just visit the website, "+
+                        "but the TLDR; version is that it allows people like me, who want to give a bit more than a Like, "+
+                        "to make donations on your videos.\n\n"+
+                        "If you let your audience know they should download it as well, "+
                         "then they'll be able to start giving out donations where they see fit "+
                         "(as well as being able to receive donations themselves).\n\n"+
                         "Anyways, keep up the great work!";

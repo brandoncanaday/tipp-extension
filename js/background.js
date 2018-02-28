@@ -5,8 +5,8 @@
     chrome.browserAction.setIcon({ path: 'img/tipp-icon-btn.svg' });
 
     // these will be changed when deploying new release
-    const LIVE_DOMAIN_URL = 'https://staging.tippextension.com';
-    const STRIPE_CLIENT_ID = 'ca_BZRHmzhOuOKgiOM4u2GaqcEy9wkqM4Dn';
+    const LIVE_DOMAIN_URL = 'https://tippextension.com';
+    const STRIPE_CLIENT_ID = 'ca_BZRHiuMtqh9sQR9j0zHNf4bOIhJ3AB4Q';
 
     // google stuff
     const GOOGLE_API_KEY   = 'AIzaSyDXr947mAu05wahjTLGZ-0ShCtyu2NVm_g';
