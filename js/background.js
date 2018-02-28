@@ -12,15 +12,16 @@
     const GOOGLE_API_KEY   = 'AIzaSyDXr947mAu05wahjTLGZ-0ShCtyu2NVm_g';
     const GOOGLE_CLIENT_ID = '1016457967962-mfps991h6u7u6f51aglairp8uho8odnn.apps.googleusercontent.com';
     const GOOGLE_OAUTH_URL = 'https://accounts.google.com/o/oauth2/v2/auth'+
-                              '?scope=profile+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fyoutube.readonly&'+
-                              'include_granted_scopes=true&'+
-                              'redirect_uri=https%3A%2F%2F'+chrome.runtime.id+'.chromiumapp.org&'+
-                              'response_type=token&'+
-                              'client_id='+GOOGLE_CLIENT_ID;
+                                '?scope=profile+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fyoutube.readonly&'+
+                                'include_granted_scopes=true&'+
+                                'redirect_uri=https%3A%2F%2F'+chrome.runtime.id+'.chromiumapp.org&'+
+                                'response_type=token&'+
+                                'client_id='+GOOGLE_CLIENT_ID;
     const GOOGLE_OAUTH_VALIDATE_URL = 'https://www.googleapis.com/oauth2/v3/tokeninfo';
-    const STRIPE_OAUTH_URL = 'https://connect.stripe.com/express/oauth/authorize'+
-                                '?redirect_uri=https%3A%2F%2F'+chrome.runtime.id+'.chromiumapp.org&'+
-                                'client_id='+STRIPE_CLIENT_ID;
+    const STRIPE_OAUTH_URL = 'https://connect.stripe.com/oauth/authorize'+
+                                '?response_type=code&'+
+                                'client_id='+STRIPE_CLIENT_ID+
+                                '&scope=read_write';
     // const GITHUB_CLIENT_ID = 'db209c2ac723da32da6e';
     // const GITHUB_OAUTH_URL = 'https://github.com/login/oauth/authorize?client_id='+
     //                             '?redirect_uri=https%3A%2F%2F'+chrome.runtime.id+'.chromiumapp.org&'+
@@ -606,26 +607,8 @@
 
     // attempts to open the user's Stripe account dashboard in another tab
     function openStripeDashboard(sendResponse) {
-        $.ajax({
-            type: "GET",
-            url: `${LIVE_DOMAIN_URL}/api/auth/stripe-dashboard`,
-            headers: { "Authorization": `Bearer ${getJWT()}` },
-            success: (data) => {
-                if(!data.error) {
-                    // open the dashboard
-                    openURLInNewTab(data.link.url, sendResponse);
-                } else if(data.error.type == 'forbidden') {
-                    // if error was due to invalid/missing session token
-                    handleIllegalAccessFailure(sendResponse, data);
-                } else {
-                    // there was an issue generating the Stripe dashboard link
-                    handleDashboardLinkFailure(sendResponse, data);
-                }
-            },
-            error: () => {
-                handleAjaxFailure(sendResponse);
-            }
-        });
+        // open the dashboard using express account dashboard link
+        openURLInNewTab('https://dashboard.stripe.com', sendResponse);
     }
 
 
@@ -762,15 +745,6 @@
             NOTIFICATION.accountCreation.success.message
         );
         chrome.browserAction.setPopup({ popup: 'dashboard.html' });
-        return sendResponse((obj) ? obj : {});
-    }
-
-    // handle Stripe dashboard link generation failure
-    function handleDashboardLinkFailure(sendResponse, obj) {
-        notify(
-            NOTIFICATION.stripeDashboardFailure.title,
-            NOTIFICATION.stripeDashboardFailure.message
-        );
         return sendResponse((obj) ? obj : {});
     }
 

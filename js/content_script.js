@@ -68,10 +68,10 @@
     // 2) built with call-to-action message asking user to tell the creator
     // to create such an account.
     function createTippButton(stripeUser) {
-        stripeUser.stripeId = 'acct_1BUTsgDIAnKljw3D'; // REMOVE AFTER TESTING
-        stripeUser.fname = 'Nick'; // REMOVE AFTER TESTING
-        stripeUser.lname = 'Weinand'; // REMOVE AFTER TESTING
-        stripeUser.displayname = 'nickweinand'; // REMOVE AFTER TESTING
+        stripeUser.stripeId = 'acct_1C0L5AH09iECdXAu'; // REMOVE AFTER TESTING
+        stripeUser.fname = 'Brandon'; // REMOVE AFTER TESTING
+        stripeUser.lname = 'Canaday'; // REMOVE AFTER TESTING
+        stripeUser.displayname = 'brandoncanadaytest'; // REMOVE AFTER TESTING
 
         let $tipp = document.createElement('button');
         let $img = document.createElement('img');
@@ -228,9 +228,20 @@
         $button.className += ' tipp-btn tipp-green tipp-hoverable';
         $button.textContent = "Let them know";
         $button.setAttribute('data-comment', COMMENT);
-        $button.addEventListener('click', (e) => {
-            // trigger comment box to open
-            const $commentBoxTrigger = document.querySelector('.comment-simplebox-trigger');
+        $button.addEventListener('click', leaveComment);
+        
+        $callToAction.appendChild($img);
+        $callToAction.appendChild($p);
+        $callToAction.appendChild($button);
+        $callToAction.addEventListener('click', e => e.stopPropagation());
+        return $callToAction;
+    }
+
+    function leaveComment(e) {
+        // trigger comment box to open for both new and old youtube design
+        let $commentBoxTrigger = document.querySelector('.comment-simplebox-trigger');
+        if($commentBoxTrigger) {
+            // old youtube design
             let clickEvent;
             clickEvent = document.createEvent("MouseEvents");
             clickEvent.initMouseEvent("click", true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
@@ -242,13 +253,21 @@
             if($commentBoxSubmit) $commentBoxSubmit.removeAttribute('disabled');
             // // potentially auto-submit comment as well ??
             // if($commentBoxSubmit) $commentBoxSubmit.dispatchEvent(clickEvent);
-        });
-        
-        $callToAction.appendChild($img);
-        $callToAction.appendChild($p);
-        $callToAction.appendChild($button);
-        $callToAction.addEventListener('click', e => e.stopPropagation());
-        return $callToAction;
+        } else {
+            // new youtube design
+            $commentBoxTrigger = document.querySelector('#placeholder-area.ytd-comment-simplebox-renderer');
+            let clickEvent;
+            clickEvent = document.createEvent("MouseEvents");
+            clickEvent.initMouseEvent("click", true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+            $commentBoxTrigger.dispatchEvent(clickEvent);
+            // insert comment text and enable comment submit button
+            const $commentBox = document.querySelector('#textarea.ytd-commentbox textarea#textarea');
+            const $commentBoxMirror = document.querySelector('#mirror.mirror-text.iron-autogrow-textarea');
+            const $commentBoxSubmit = document.querySelector('#buttons.ytd-commentbox #submit-button #button');
+            if($commentBox) $commentBox.textContent = e.target.getAttribute('data-comment');
+            if($commentBoxMirror) $commentBoxMirror.innerHTML = e.target.getAttribute('data-comment')+'&nbsp;';
+            if($commentBoxSubmit) $commentBoxSubmit.removeAttribute('disabled');
+        }
     }
 
     // creates and returns a login prompt for the user, and is
