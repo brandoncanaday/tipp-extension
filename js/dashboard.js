@@ -12,9 +12,11 @@
 
     // add necessary click handlers
     document.querySelector('#stripe-connect-btn a').addEventListener('click', handleStripeConnect);
+    document.querySelector('#yt-connect-btn a').addEventListener('click', handleYTConnect);
+    document.querySelector('#github-connect-btn a').addEventListener('click', handleGithubConnect);
+
     document.querySelector('#stripe-dashboard-btn a').addEventListener('click', handleOpenStripeDashboard);
     document.querySelector('#logout-btn a').addEventListener('click', logout);
-    document.querySelector('#yt-connect-btn a').addEventListener('click', handleYTConnect);
     document.querySelector('#delete-account-btn').addEventListener('click', handleDeleteAccount);
 
     // initializes the entire dashboard for the newly logged-in Tipp user
@@ -45,7 +47,7 @@
         // send request to start Stripe connect
         setTimeout(() => {
             chrome.runtime.sendMessage({
-                "message": "start_stripe_oauth"
+                "message": "stripe_connect"
             }, (response) => {
                 // check on response
                 if(!response.error) {
@@ -97,7 +99,7 @@
         // YT channels that were added to db to be returned from backend
         setTimeout(() => {
             chrome.runtime.sendMessage({
-                "message": "start_youtube_connect_flow"
+                "message": "youtube_connect"
             }, (response) => {
                 // check on response
                 if(!response.error) {
@@ -107,6 +109,32 @@
                         changeImage(acc.channels[0].channelIcon, '.user-view .profile-pic');
                         insertYTChannelList(acc.channels, '#yt-account');
                     }
+                    // close loading screen
+                    closeLoadingScreen();
+                } else if(response.error.type == 'forbidden') {
+                    // illegal access error, so logout user
+                    logout();
+                } else {
+                    // some other error, so just close loading screen
+                    closeLoadingScreen();
+                }
+            });
+        }, 700);
+    }
+
+    // handles when user clicks the add YT account button
+    function handleGithubConnect() {
+        openLoadingScreen('', 'black');
+        // start Google OAuth in background, and then wait for the connected
+        // YT channels that were added to db to be returned from backend
+        setTimeout(() => {
+            chrome.runtime.sendMessage({
+                "message": "github_connect"
+            }, (response) => {
+                // check on response
+                if(!response.error) {
+                    // no error, so update UI with newly connected YT channels
+                    console.log(response);
                     // close loading screen
                     closeLoadingScreen();
                 } else if(response.error.type == 'forbidden') {

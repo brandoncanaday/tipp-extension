@@ -22,10 +22,10 @@
                                 '?response_type=code&'+
                                 'client_id='+STRIPE_CLIENT_ID+
                                 '&scope=read_write';
-    // const GITHUB_CLIENT_ID = 'db209c2ac723da32da6e';
-    // const GITHUB_OAUTH_URL = 'https://github.com/login/oauth/authorize?client_id='+
-    //                             '?redirect_uri=https%3A%2F%2F'+chrome.runtime.id+'.chromiumapp.org&'+
-    //                             'client_id='+GITHUB_CLIENT_ID;
+    const GITHUB_CLIENT_ID = 'db209c2ac723da32da6e';
+    const GITHUB_OAUTH_URL = 'https://github.com/login/oauth/authorize?client_id='+
+                                '?redirect_uri=https%3A%2F%2F'+chrome.runtime.id+'.chromiumapp.org&'+
+                                'client_id='+GITHUB_CLIENT_ID;
 
     const NOTIFICATION = {
         'accountCreation': {
@@ -62,10 +62,6 @@
                 message: 'Your Stripe account connection failed.'
             }
         },
-        'googleOauthAborted': {
-            title: 'Google OAuth Failed',
-            message: 'Your YouTube channels were not connected.'
-        },
         'mongoFailure': {
             title: 'Database Error',
             message: 'There was an issue communicating with the Tipp database.'
@@ -88,8 +84,30 @@
                 message: 'There was an issue connecting your account.'
             }
         },
+        'githubConnect': {
+            success: {
+                title: 'GitHub Connect Success',
+                message: 'You just expanded your Tipp audience!'
+            },
+            failure: {
+                title: 'GitHub Connect Failed',
+                message: 'There was an issue connecting your account.'
+            }
+        },
+        'googleOauthAborted': {
+            title: 'Google OAuth Failed',
+            message: 'Your YouTube channels were not connected.'
+        },
         'googlePermissionDenied': {
             title: 'Google OAuth Failed',
+            message: 'Necessary permissions were not given.'
+        },
+        'githubOauthAborted': {
+            title: 'GitHub OAuth Failed',
+            message: 'Your GitHub account was not connected.'
+        },
+        'githubPermissionDenied': {
+            title: 'GitHub OAuth Failed',
             message: 'Necessary permissions were not given.'
         },
         'tippAmountError': {
@@ -133,11 +151,14 @@
         case 'login_user':
             loginFlow(request.email, request.passphrase, sendResponse);
             return true;
-        case 'start_stripe_oauth':
+        case 'stripe_connect':
             stripeOAuthFlow(sendResponse);
             return true;
-        case 'start_youtube_connect_flow':
+        case 'youtube_connect':
             youtubeConnectFlow(sendResponse);
+            return true;
+        case 'github_connect':
+            githubConnectFlow(sendResponse);
             return true;
         case 'open_stripe_dashboard':
             openStripeDashboard(sendResponse);
@@ -245,7 +266,7 @@
             validateGoogleOAuthToken(token, sendResponse, () => {
                 // call youtube API to retrieve all channels of authorized account
                 getChannelsForGoogleUser(token, sendResponse, (response) => {
-                    // update "YTChannels" table on backend for all channels of authorized account
+                    // update "channels" table on backend for all channels of authorized account
                     let channels = buildYTChannelDocuments(response.items);
                     if(!channels.length) {
                         // dont bother making db call if user's Google acc has no YT channels
@@ -310,6 +331,71 @@
         });
     }
 
+    // begins GitHub Oauth process for connecting GitHub account of user
+    function githubConnectFlow(sendResponse) {
+        // launch GitHub auth flow window
+        chrome.identity.launchWebAuthFlow({
+            'url': GITHUB_OAUTH_URL,
+            'interactive': true
+        }, (redirect_url) => {
+            // check if oauth flow failed due to user closing window
+            if(chrome.runtime.lastError) return handleGithubOAuthFailure(true, sendResponse);
+            // grab auth token from url
+            const code = getParameterByName('code', redirect_url);
+            // check if oauth flow failed due to insufficient permissions
+            if(!code) return handleGithubOAuthFailure(false, sendResponse);
+            // exchange code for GitHub access token
+            getGithubOAuthToken(code, sendResponse, (token) => {
+                // call github API to retrieve username of authorized account
+                getGithubUser(token, sendResponse, (response) => {
+                    // call github API to retrieve public, owned repos of authorized account
+                    getGithubUserRepos(response.login, sendResponse, (response) => {
+                        // add them to "repos" table on backend
+                        let repositories = buildRepoDocuments(response.login);
+                        if(!repositories.length) {
+                            // dont bother making db call if user's Google acc has no YT channels
+                            handleNoGithubReposForAccount(sendResponse);
+                        } else {
+                            // try to add all public, owned repositories for the authorized account on backend
+                            addRepositories(repositories, sendResponse, (numAdded) => {
+                                // let user know how many repositories were just added
+                                notify(
+                                    NOTIFICATION.githubConnect.success.title,
+                                    (numAdded > 1) ? `${numAdded} repositories were just connected.` : `${numAdded} repository was just connected.`
+                                );
+                                // add new repositories to cached user
+                                const acc = getCachedValue('tipp_account');
+                                acc.repositories = acc.repositories.concat(repositories);
+                                setCachedValue('tipp_account', acc);
+                                sendResponse({});
+                            });
+                        }
+                    });
+                });
+            });
+        });
+    }
+
+    // tries to get profile data associated with GitHub account that user authorized
+    function getGithubUserData(token, sendResponse, callback) {
+        $.ajax({
+            type: "GET",
+            url: `https://api.github.com/user?access_token=${token}`,
+            success: (data) => {
+                if(!data.error) {
+                    callback(data);
+                } else {
+                    // problem retrieving data from Youtube
+                    handleGithubConnectionFailure(sendResponse);
+                }
+            },
+            error: () => {
+                // request to Youtube failed
+                handleAjaxFailure(sendResponse);
+            }
+        });
+    }
+
     // called when trying to build the Tipp button for the current YT video page
     function getStripeIdFromVideo(video, sendResponse) {
         // makes YT api call to find YT channel associated w/ video id
@@ -344,7 +430,7 @@
             },
             error: () => {
                 // request to YT failed
-                handleYTChannelConnectionFailure(sendResponse);
+                handleAjaxFailure(sendResponse);
             }
         });
     }
@@ -579,6 +665,32 @@
         });
     }
 
+    // makes request to GitHub from Tipp backend to retrieve valid 
+    // GitHub access token for user
+    function getGithubOAuthToken(code, sendResponse, callback) {
+        $.ajax({
+            type: "POST",
+            url: `${LIVE_DOMAIN_URL}/api/auth/github-token/${code}`,
+            contentType: 'application/json',
+            headers: { "Authorization": `Bearer ${getJWT()}` },
+            success: (data) => {
+                if(!data.error) {
+                    const token = JSON.parse(data.authToken);
+                    callback(token);
+                } else if(data.error.type == 'forbidden') {
+                    // if error was due to invalid/missing session token
+                    handleIllegalAccessFailure(sendResponse, data);
+                } else {
+                    // problem retrieving auth token from Stripe
+                    handleGithubOAuthFailure(sendResponse);
+                }
+            },
+            error: () => {
+                handleAjaxFailure(sendResponse);
+            }
+        });
+    }
+
     // finds user on backend using session token, and then updates the object with the new
     // top level key/value pairs in the given fields param
     function updateUser(fields, sendResponse, callback) {
@@ -684,11 +796,39 @@
         }
     }
 
+    // lets user what they did wrong during their GitHub OAuth flow
+    function handleGithubOAuthFailure(aborted, sendResponse, obj) {
+        if(aborted) {
+            // user aborted Google OAuth
+            notify(
+                NOTIFICATION.githubOauthAborted.title,
+                NOTIFICATION.githubOauthAborted.message
+            );
+            return sendResponse((obj) ? obj : {});
+        } else {
+            // user did not give necessary permissions during oauth process
+            notify(
+                NOTIFICATION.githubPermissionDenied.title,
+                NOTIFICATION.githubPermissionDenied.message
+            );
+            return sendResponse((obj) ? obj : {});
+        }
+    }
+
     // lets user know the Google API-related operation caused their YT channels not to connect
     function handleYTChannelConnectionFailure(sendResponse, obj) {
         notify(
             NOTIFICATION.youtubeConnect.failure.title,
             NOTIFICATION.youtubeConnect.failure.message
+        );
+        return sendResponse((obj) ? obj : {});
+    }
+
+    // lets user know the Google API-related operation caused their YT channels not to connect
+    function handleGithubConnectionFailure(sendResponse, obj) {
+        notify(
+            NOTIFICATION.githubConnect.failure.title,
+            NOTIFICATION.githubConnect.failure.message
         );
         return sendResponse((obj) ? obj : {});
     }
@@ -707,6 +847,15 @@
         notify(
             NOTIFICATION.youtubeConnect.failure.title,
             "No channels associated with that account."
+        );
+        return sendResponse((obj) ? obj : {});
+    }
+
+    // lets user know there were no public, owned repositories associated with that GitHub account
+    function handleNoGithubReposForAccount(sendResponse, obj) {
+        notify(
+            NOTIFICATION.githubConnect.failure.title,
+            "No repositories associated with that account."
         );
         return sendResponse((obj) ? obj : {});
     }

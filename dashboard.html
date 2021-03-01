@@ -11,9 +11,10 @@
     </head>
     <body>
 
-      <!-- TIPP PROFILE -->
-
+      <!-- dashboard -->
       <ul class="side-nav" id="tipp-profile">
+
+        <!-- user profile section -->
         <li>
           <div class="user-view">
             <div class="background">
@@ -27,27 +28,49 @@
           </div>
         </li>
 
-        <li id="stripe-account"><a class="subheader">Stripe Account
+        <!-- stripe account section -->
+        <li id="stripe-account" class="valign-wrapper account-heading">
+          <img src="img/stripe.svg" alt="Stripe">
+          <a class="subheader">Stripe</a>
+        </li>
+
+        <li id="stripe-dashboard-btn"><a class="btn waves-effect waves-light white-text blue">My Dashboard
         </a></li>
-        <li id="stripe-dashboard-btn"><a class="btn waves-effect waves-light white-text blue">My Stripe Dashboard
-        </a></li>
-        <li id="stripe-connect-btn"><a class="btn waves-effect waves-light white-text blue">Connect Stripe Account
+        <li id="stripe-connect-btn"><a class="waves-effect waves-light white-text blue">Connect Account
         </a></li>
         <li><div class="divider"></div></li>
 
-        <li id="yt-account"><a class="subheader">YouTube Channels
-        </a></li>
-        <li id="yt-connect-btn"><a class="waves-effect" href="#"><i class="material-icons red-text">add_circle</i>Add YouTube Account
+        <!-- youtube account section -->
+        <li id="yt-account" class="valign-wrapper account-heading">
+          <img src="img/youtube.svg" alt="YouTube">
+          <a class="subheader">YouTube</a>
+        </li>
+
+        <li id="yt-connect-btn"><a class="waves-effect" href="#"><i class="material-icons">add_circle</i>Add Channels
         </a></li>
         <li><div class="divider"></div></li>
 
-        <li id="tipp-account"><a class="subheader">Tipp Account
+        <!-- youtube account section -->
+        <li id="github-account" class="valign-wrapper account-heading">
+          <img src="img/github.svg" alt="GitHub">
+          <a class="subheader">GitHub</a>
+        </li>
+
+        <li id="github-connect-btn"><a class="waves-effect" href="#"><i class="material-icons">add_circle</i>Add Repositories
         </a></li>
+        <li><div class="divider"></div></li>
+
+        <!-- tipp account section -->
+        <li id="tipp-account" class="valign-wrapper account-heading">
+          <a class="subheader">Tipp</a>
+        </li>
+
         <li id="logout-btn"><a class="waves-effect" href="#"><i class="material-icons">power_settings_new</i>Logout
         </a></li>
         <li><a class="waves-effect red lighten-5 modal-trigger" href="#delete-account-modal"><i class="material-icons">warning</i>Delete Account
         </a></li>
         <li><div class="divider"></div></li>
+        
       </ul>
 
       <!-- LOADING SCREEN MODAL -->
